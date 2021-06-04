@@ -5,14 +5,26 @@ import path from 'path';
 const dev = process.env.NODE_ENV === 'development';
 
 let db;
+
 try {
-	db = new Firestore({
-		projectId: process.env.PROJECT_ID,
-		keyFilename: dev
-			? path.join(path.resolve(), 'serviceAccount.json')
-			: JSON.parse(process.env.SERVICE_ACCOUNT),
-		timestampsInSnapshots: true
-	});
+	if (dev) {
+		db = new Firestore({
+			projectId: process.env.PROJECT_ID,
+			keyFilename: path.join(path.resolve(), 'serviceAccount.json'),
+			timestampsInSnapshots: true
+		});
+	} else {
+		const config = {
+			credentials: {
+				private_key: process.env.PRIVATE_KEY,
+				client_email: process.env.CLIENT_EMAIL
+			},
+			projectId: process.env.PROJECT_ID,
+			timestampsInSnapshots: true
+		};
+
+		db = new Firestore(config);
+	}
 } catch (error) {
 	console.log('DB error', error);
 }
