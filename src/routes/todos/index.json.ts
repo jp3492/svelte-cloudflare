@@ -18,7 +18,6 @@ export const get: RequestHandler = async () => {
 	const snapshots = await angebote.get();
 	const data = [];
 	snapshots.forEach((s) => data.push({ ...s.data(), id: s.id }));
-	console.log('get');
 	return {
 		body: data
 	};
