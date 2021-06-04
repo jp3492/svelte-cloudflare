@@ -1,10 +1,17 @@
 import { Firestore } from '@google-cloud/firestore';
 import type { RequestHandler } from '@sveltejs/kit';
 import path from 'path';
+import dotenv from 'dotenv';
 
 const dev = process.env.NODE_ENV === 'development';
 
+if (dev) {
+	dotenv.config();
+}
+
 let db;
+
+console.log(process.env);
 
 try {
 	if (dev) {

@@ -33,6 +33,7 @@
     "@google-cloud/firestore": "^4.12.2",
     "@lukeed/uuid": "^2.0.0",
     "cookie": "^0.4.1",
+    "dotenv": "^10.0.0",
     "firebase-admin": "^9.9.0"
   }
 }
