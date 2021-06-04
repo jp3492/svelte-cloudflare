@@ -4,13 +4,18 @@ import path from 'path';
 
 const dev = process.env.NODE_ENV === 'development';
 
-const db = new Firestore({
-	projectId: process.env.PROJECT_ID,
-	keyFilename: dev
-		? path.join(path.resolve(), 'serviceAccount.json')
-		: JSON.parse(process.env.SERVICE_ACCOUNT),
-	timestampsInSnapshots: true
-});
+let db;
+try {
+	db = new Firestore({
+		projectId: process.env.PROJECT_ID,
+		keyFilename: dev
+			? path.join(path.resolve(), 'serviceAccount.json')
+			: JSON.parse(process.env.SERVICE_ACCOUNT),
+		timestampsInSnapshots: true
+	});
+} catch (error) {
+	console.log('DB error', error);
+}
 
 const angebote = db.collection('angebote');
 
